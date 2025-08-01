@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm -r dist build 2>/dev/null
+rm -r web build 2>/dev/null
 appName="alist"
 builtAt="$(date +'%F %T %z')"
 gitAuthor="Xhofe <i@nn.ci>"
@@ -37,13 +37,15 @@ FetchWebDev() {
 }
 
 FetchWebRelease() {
-  tag=$(curl -s https://api.github.com/repos/NodeSeekDev/nlist-web/tags | jq -r '.[0].name')
-  curl -L "https://github.com/NodeSeekDev/nlist-web/archive/refs/tags/${tag}.tar.gz" -o dist.tar.gz
-  mkdir dist
-  tar -zxvf dist.tar.gz -C dist 
+  mkdir web
+  git clone https://github.com/NodeSeekDev/nlist-web.git web
+  cd web
+  git clone https://github.com/AlistGo/solid-router.git solid-router
+  pnpm install
+  pnpm run build
   rm -rf public/dist
   mv -f dist public
-  rm -rf dist.tar.gz
+  cd ../
 }
 
 BuildWinArm64() {

@@ -37,15 +37,18 @@ FetchWebDev() {
 }
 
 FetchWebRelease() {
+  WEB_TAG=$(curl -s https://api.github.com/repos/NodeSeekDev/nlist-web/tags | jq -r '.[0].name')
   mkdir web
   git clone https://github.com/NodeSeekDev/nlist-web.git web
   cd web
+  git fetch --tags
+  git checkout -b "$WEB_TAG" "$WEB_TAG"
   git clone https://github.com/AlistGo/solid-router.git solid-router
   pnpm install
   pnpm run build
-  rm -rf public/dist
-  mv -f dist public
   cd ../
+  rm -rf public/dist
+  mv -f web/dist public
 }
 
 BuildWinArm64() {

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ~/.bashrc
-echo "parameter: \$1: $1, \$2: $2, \$3: $3, \$4: $4, \$5: $5"
 appName="alist"
 builtAt="$(date +'%F %T %z')"
 gitAuthor="Xhofe <i@nn.ci>"
@@ -194,8 +193,6 @@ BuildRelease() {
 }
 
 BuildReleaseLinuxMusl() {
-  echo "parameter: \$1: $1, \$2: $2, \$3: $3, \$4: $4, \$5: $5"
-  
   rm -rf .git/
   mkdir -p "build"
   muslflags="--extldflags '-static -fpic' $ldflags"

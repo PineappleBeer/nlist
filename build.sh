@@ -85,7 +85,7 @@ BuildDev() {
       url="${BASE}${file_name}.tgz"
       curl -L -o "${file_name}.tgz" "${url}"
       sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-      rm -f "${i}.tgz"
+      rm -f "${file_name}.tgz"
       echo "Found matching index $i, building only for ${os_arch}"
       export GOOS=${os_arch%%-*}
       export GOARCH=${os_arch##*-}
@@ -108,7 +108,7 @@ BuildDev() {
       url="${BASE}${file_name}.tgz"
       curl -L -o "${file_name}.tgz" "${url}"
       sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-      rm -f "${i}.tgz"
+      rm -f "${file_name}.tgz"
       echo building for ${os_arch}
       export GOOS=${os_arch%%-*}
       export GOARCH=${os_arch##*-}
@@ -222,7 +222,7 @@ BuildReleaseLinuxMusl() {
       url="${BASE}${file_name}.tgz"
       curl -L -o "${file_name}.tgz" "${url}"
       sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-      rm -f "${i}.tgz"
+      rm -f "${file_name}.tgz"
       echo "Found matching index $i, building only for ${os_arch}"
       export GOOS=${os_arch%%-*}
       export GOARCH=${os_arch##*-}
@@ -244,7 +244,7 @@ BuildReleaseLinuxMusl() {
     url="${BASE}${file_name}.tgz"
     curl -L -o "${file_name}.tgz" "${url}"
     sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-    rm -f "${i}.tgz"
+    rm -f "${file_name}.tgz"
     echo building for ${os_arch}
     export GOOS=${os_arch%%-*}
     export GOARCH=${os_arch##*-}
@@ -287,7 +287,7 @@ BuildReleaseLinuxMuslArm() {
       url="${BASE}${file_name}.tgz"
       curl -L -o "${file_name}.tgz" "${url}"
       sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-      rm -f "${i}.tgz"
+      rm -f "${file_name}.tgz"
       echo "Found matching index $i, building only for ${os_arch}"
       export GOOS=linux
       export GOARCH=arm
@@ -312,7 +312,7 @@ BuildReleaseLinuxMuslArm() {
     url="${BASE}${file_name}.tgz"
     curl -L -o "${file_name}.tgz" "${url}"
     sudo tar xf "${file_name}.tgz" --strip-components 1 -C /usr/local
-    rm -f "${i}.tgz"
+    rm -f "${file_name}.tgz"
     echo building for ${os_arch}
     export GOOS=linux
     export GOARCH=arm

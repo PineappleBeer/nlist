@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.bashrc
+rm -r dist build 2>/dev/null
 appName="alist"
 builtAt="$(date +'%F %T %z')"
 gitAuthor="Xhofe <i@nn.ci>"
@@ -12,9 +12,8 @@ elif [ "$1" = "beta" ]; then
   version="beta"
   webVersion="dev"
 else
-  git tag -d beta
-  version=$(git describe --abbrev=0 --tags)
-  webVersion=$(wget -qO- -t1 -T2 "https://api.github.com/repos/NodeSeekDev/nlist-web/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+  version=$(curl -s https://api.github.com/repos/NodeSeekDev/nlist/tags | jq -r '.[0].name')
+  webVersion=$(curl -s https://api.github.com/repos/NodeSeekDev/nlist-web/tags | jq -r '.[0].name')
 fi
 
 echo "backend version: $version"
@@ -38,8 +37,10 @@ FetchWebDev() {
 }
 
 FetchWebRelease() {
-  curl -L https://github.com/NodeSeekDev/nlist-web/releases/latest/download/dist.tar.gz -o dist.tar.gz
-  tar -zxvf dist.tar.gz
+  tag=$(curl -s https://api.github.com/repos/NodeSeekDev/nlist-web/tags | jq -r '.[0].name')
+  curl -L "https://github.com/NodeSeekDev/nlist-web/archive/refs/tags/${tag}.tar.gz" -o dist.tar.gz
+  mkdir dist
+  tar -zxvf dist.tar.gz -C dist 
   rm -rf public/dist
   mv -f dist public
   rm -rf dist.tar.gz

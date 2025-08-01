@@ -1,10 +1,15 @@
-FROM alpine:edge as builder
+FROM alpine:3.20 as builder
 LABEL stage=go-builder
 WORKDIR /app/
-RUN apk add --no-cache bash jq curl gcc git go musl-dev
-COPY go.mod go.sum ./
-RUN go mod download
 COPY ./ ./
+RUN apk add --no-cache jq bash curl gcc git musl-dev npm && \  
+    npm install -g pnpm && \
+    curl -L https://dl.google.com/go/go1.23.4.linux-amd64.tar.gz -o go1.23.4.linux-amd64.tar.gz && \ 
+    tar -C /usr/local -xzf go1.23.4.linux-amd64.tar.gz && \
+    rm go1.23.4.linux-amd64.tar.gz 
+ENV PATH=$PATH:/usr/local/go/bin  
+ENV GOROOT=/usr/local/go  
+RUN go mod download
 RUN bash build.sh release docker
 
 FROM alpine:edge
